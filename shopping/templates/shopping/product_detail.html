@@ -1,0 +1,58 @@
+<style type="text/css">
+	.btn:hover
+	{
+		background-color: orange;
+	}
+</style>
+
+{% extends "shopping/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<br>
+	<article class="p-3 shadow-lg media content-section border border-danger bg-secondary rounded-lg">
+		<img class = "rounded-lg article-img" src="{{ product.image.url }}" style="width:60%;height:100%;">
+		<div class="media-body">
+		    <h2 class="article-title text-danger font-weight-bold font-italic">{{ object.title }}</h2>
+		    <h5 class="article-content text-white">{{ object.description }}</h5>
+		    <a href="{% url 'cart' add object.title %}"><button class="btn btn-outline-danger float-right" type="button">Add to Cart</button></a>
+		    {% if avg_review == 0 %}
+				 <div>NO RATINGS</div>
+			{% else %}
+			    <div class =  "{% if avg_review <= 2 %}text-danger{% elif avg_review > 2 and avg_review < 4 %}text-warning{% else %}text-warning{% endif %}">User Rating: {{ avg_review }} / 5</div>
+			{% endif %}
+		</div>
+	</article>
+	<div class="container border border-secondary">
+		<br>
+	<h2 class="text-center">Reviews</h2>
+	{% if avg_review == 0 %}
+		 <div> There are no user ratings  for this product</div>
+		 <br>
+	{% else %}
+	    <hr>
+	    <div class="container border border-danger">
+	    	{% for review in reviews %}
+	    		<p>{{ review.user }} ({{ review.rating }} stars) : {{ review.comment }}</p>
+	    		{% if review.user == user %}
+    			<div>
+    			<a class = "btn btn-primary btn-sm mt-1 mb-1" href="{% url 'review-update' pk=review.pk %}">Update</a>
+    			<a class = "btn btn-danger btn-sm mt-1 mb-1" href="{% url 'review-delete' pk=review.pk %}">Delete</a>
+    			</div>
+    			<br>
+    			{% endif %}
+	    	{% endfor %}
+	    </div>
+	    <br>
+	{% endif %}
+	{% if user.is_authenticated %}
+    <div class="container border border-danger">
+    	<form method="POST">
+    		{% csrf_token %}
+    	{{form|crispy}}
+    	<button class = "btn" type="submit">Add Comment</button></div>
+    	</form>
+	</div>
+	{% endif %}
+</div>
+
+{% endblock content %}

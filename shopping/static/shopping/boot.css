@@ -1,0 +1,88 @@
+body {
+  padding: 0;
+  margin: 0;
+  background: #ffffff;
+}
+/*--- navigation bar ---*/
+.navbar {
+  background:#DCDCDC;
+}
+.nav-link,
+.navbar-brand {
+  color: #000;
+  cursor: pointer;
+}
+.nav-link {
+  margin-right: 1em !important;
+}
+.nav-link:hover {
+  color: #0000FF;
+}
+.navbar-collapse {
+  justify-content: flex-end;
+}
+.header {
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSr7OGTTP92KZQWNVhtpPi09Re0xQxSw8uvlc156VTNoKE5__15');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.description{
+	left: 50%;
+	position: absolute;
+	top: 45%;
+	transform: translate(-50%,-55%);
+	text-align: center;
+}
+.description h1{
+	color: #000000;
+}
+.description p{
+	color: #000000;
+	font-size: 1.3rem;
+	line-height: 1.5;
+}
+.description button {
+  border:1px solid #6ab446;
+  background:#6ab446;
+  border-radius: 2px;
+  color:#fff;
+}
+.description button:hover {
+  border:1px solid #fff;
+  background:#fff;
+  color:#000;
+}
+.features {
+  margin: 4em auto;
+  padding: 1em;
+  position: relative;
+}
+.feature-title {
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.features img {
+  -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  margin-bottom: 16px;
+}
+.page-footer {
+  background-color: #222;
+  color: #ccc;
+  padding: 60px 0 30px;
+}
+.footer-copyright {
+  color: #666;
+  padding: 40px 0;
+}
+#newsletter{
+	padding: 15px;
+	color: #000000;
+	font-size: 20px;
+	background: #DCDCDC;
+}

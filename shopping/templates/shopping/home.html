@@ -1,0 +1,190 @@
+<style type="text/css">
+	.button {
+  border-radius: 8px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 18px;
+  padding: 2px;
+  width: 80px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.flip-card {
+  background-color: transparent;
+  width: 250px;
+  height: 400px;
+  perspective: 1000px;
+  padding: 8px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  background-color: #fff;
+  color: black;
+}
+
+.flip-card-back {
+  background-color: #fff;
+  color: white;
+  transform: rotateY(180deg);
+}
+.card-flip > div {
+    backface-visibility: hidden;
+    transition: transform 300ms;
+    transition-timing-function: linear;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    display: flex;
+  }
+
+  .card-front {
+    transform: rotateY(0deg);
+  }
+
+  .card-back {
+    transform: rotateY(180deg);
+    position: absolute;
+    top: 0;
+  }
+
+  .card-flip:hover .card-front {
+    transform: rotateY(-180deg);
+  }
+    
+  .card-flip:hover .card-back {
+    transform: rotateY(0deg);
+  }
+  .column {
+  float: left;
+  width: 33.33%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+{% extends "shopping/base.html" %}
+{% block content %}
+	<div class="jumbotron" style="margin-bottom: 0px;">
+ 		<h1>UrbanTrend</h1>
+ 		<p>We Fulfill Your Wishes!</p>
+ 	</div>
+ 	<div class="container" style="background-color: #8B008B; color: white; margin-top: 30px; margin-bottom: 30px;">
+ 		<h2 style="	color:#fff;">Let's Shop</h2>
+ 	</div>		
+	<br>
+	{% if products %}
+		<div class="card-deck">
+			{% for product in products %}
+			<div class="flip-card">
+			  	<div class="flip-card-inner">
+			  		<div class="flip-card-front">
+			 	 	<img class = "rounded-sm article-img" src="{{ product.image.url }}" style="width:100%;height:60%;">
+			   		<div class="card-body text-center">
+			    	<h2><a class="article-title text-dark font-weight-bold font-italic" href="{% url 'product-detail' product.id %}"><u>{{ product.title }}</u></a></h2>
+					<p class="article-content text-danger kbd"><kbd>{{ product.cost }}</kbd></p>
+			   		</div>
+				</div>
+        <a class="article-title text-dark font-weight-bold font-italic" href="{% url 'product-detail' product.id %}">
+				<div class="flip-card-back">
+					<h5 class="article-content text-dark">{{ product.description }}</h5>
+				</div>
+        </a>
+			</div>
+		 </div>
+		 {% if forloop.counter|divisibleby:"3"  %}
+		 </div><br><div class="card-deck">
+		 {% endif %}
+			{% endfor %}
+	</div>
+	{% else %}
+		<h3>No products match your filters</h3>
+	{% endif %}
+{% endblock content %}
+{% block options %}
+	<div class="col-md-4">
+				<br>
+		    	<div class="content-section border border-secondary">
+		        <h3 class="text-center">Options</h3>
+		        	<p class='text-success'>Sort by:
+		          		<ul class="list-group">
+		            		<a href = "{% url 'shopping-home-parameters' 'cost' %}" class="border border-danger shadow-lg"><li class = "list-group-item list-group-item">Cost</li></a>
+		            		<br>
+		            		<a href = "{% url 'shopping-home-parameters' 'ratings' %}" class="border border-danger shadow-lg"><li class = "list-group-item list-group-item">User Ratings</li></a>
+		          		</ul>
+		        	</p>
+	        		<p class='text-success'>Filters:
+		          		<ul class="list-group">
+		            		<form action = "{% url 'shopping-home-parameters' 'cost_filter'%}"><li class = "list-group-item list-group-item">Cost</li>
+		            			<br>
+		            			<input type="number" class="border border-danger" name = "from" placeholder="From">
+		            			<input type="number" class="border border-top-0 border-danger" name = "to" placeholder="To">
+		            			<button type="submit" class="btn btn-danger btn-sm">Apply<i class = "fa fa-angle-double-right"></i></button>
+	            			</form>
+	            			<br>
+	            			<form action = "{% url 'shopping-home-parameters' 'rating_filter'%}"><li class = "list-group-item list-group-item">Ratings</li>
+	            				<br>
+		            			<input type="number" class="border border-danger" name = "from" placeholder="From" step="any">
+		            			<input type="number" class="border border-top-0 border-danger" name = "to" placeholder="To" step="any">
+		            			<button type="submit" class="btn btn-danger btn-sm">Apply<i class = "fa fa-angle-double-right"></i></button>
+	            			</form> 
+	            		</ul>
+		        	</p>
+		     	</div>
+	    	</div>
+{%  endblock %}
