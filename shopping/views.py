@@ -133,9 +133,8 @@ class ProductDetailView(DetailView):
 		context['add'] = add
 		context['remove'] = remove
 		context['form'] = ProductReviewForm()
-		# reviews = Reviews.objects.filter(product__pk = self.kwargs['pk'])
-		# print(reviews.count())
-		# context['reviews'] = reviews
+		reviews = Reviews.objects.filter(product__pk = self.kwargs['pk'])
+		context['reviews'] = reviews
 		# total_reviews, count = 0, 0
 		# for review in reviews:
 		# 	total_reviews += review.rating
