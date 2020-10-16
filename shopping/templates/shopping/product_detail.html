@@ -44,7 +44,7 @@
 	    </div>
 	    <br>
 	{% endif %}
-	{% if user.is_authenticated %}
+	{% if user.is_authenticated and not has_reviewed%}
     <div class="container border border-danger">
     	<form method="POST">
     		{% csrf_token %}

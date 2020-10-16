@@ -1,0 +1,34 @@
+{% extends "shopping/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+    <style>
+        .left {
+            float: left;
+        }
+        .right {
+            float: right;
+        }
+    </style>
+        {% for item, order in zipped %}
+            <ul class="list-group">
+                {{ order.date }} <span class="right" style="font-weight: bold"> Total: Rs.{{ order.amount }}</span>
+                {% for i in item %}
+                    <li class="list-group-item">
+                        <div class="left">{{ i.product }}</div>
+                        <div style="text-align: center">Rs.{{ i.product.cost }} X {{ i.quantity }}</div>
+                        <span class="right">Amount: Rs.{{ i.subtotal }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+            <hr>
+    {% endfor %}
+    {{ items }}
+{% endblock %}
+</body>
+</html>

@@ -1,11 +1,41 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth.models import User
 from shopping.models import Product
-from .models import Cart
+from .models import Cart, Order, OrderDetails
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, UserAddressForm
+
+def calcPrice(order, items):
+	total = 0
+	for item in items:
+		temp = item.product.cost * item.quantity
+		OrderDetails.objects.create(order=order, product=item.product, quantity=item.quantity, subtotal=temp)
+		total += temp
+	order.amount = total
+	order.save()
+
+def placeOrder(request):
+	items = Cart.objects.filter(user=request.user)
+	order = Order.objects.create(customer=request.user)
+	calcPrice(order, items)
+
+class viewOrder(LoginRequiredMixin, ListView):
+	model = Order
+	template_name = 'users/orders.html'
+	context_object_name = 'orders'
+
+	def get_context_data(self, *, object_list=None, **kwargs):
+		context = super(viewOrder, self).get_context_data()
+		orders = Order.objects.filter(customer=self.request.user).order_by('-id')
+		items = []
+		for order in orders:
+			items.append(OrderDetails.objects.filter(order=order))
+		context['zipped'] = zip(items, orders)
+		return context
 
 def register(request):
 	if request.method=='POST':
@@ -20,7 +50,7 @@ def register(request):
 	return render(request, "users/register.html", {'form': form})
 
 @login_required
-def profile(request):
+def updateProfile(request):
 	if request.method=='POST':
 		u_form = UserUpdateForm(request.POST, instance = request.user)
 		p_form = ProfileUpdateForm(request.POST, request.FILES, instance = request.user.profile)
@@ -39,17 +69,20 @@ def profile(request):
 
 	return render(request, "users/profile.html", context)	
 
+def addToCart(user, product):
+	new_cart_row = Cart(user=user, product=product)
+	new_cart_row.save()
+
 @login_required
-def mycart(request, par1, par2):
+def updateCart(request, par1, par2):
 	user = request.user
 	product = Product.objects.filter(title = par2).first()
 	cart_row = Cart.objects.filter(user= user).filter(product = product).first()
 	if par1=='add':
-		print("in here 1")
+		#print("in here 1")
 		if cart_row is None:
-			new_cart_row = Cart(user = user, product = product)
-			new_cart_row.save()
-			print("in here")
+			addToCart(user, product)
+			#print("in here")
 		else:
 			cart_row.quantity = cart_row.quantity+1
 			cart_row.save()
@@ -71,7 +104,7 @@ def mycart(request, par1, par2):
 	return render(request, 'users/cart.html', {'items':Cart.objects.filter(user=user),'add':'add','remove':'remove','is_empty':is_empty})
 
 @login_required
-def mycartpage(request):
+def viewCart(request):
 	user = request.user
 	if len(Cart.objects.filter(user=user))==0:
 		is_empty=True
