@@ -162,8 +162,9 @@ class ProductDetailView(DetailView):
         reviews = Reviews.objects.filter(product__pk = self.kwargs['pk'])
         context['reviews'] = reviews
         has_reviewed = False
-        if Reviews.objects.filter(user=self.request.user, product=self.get_object()).count():
-            has_reviewed = True
+        if self.request.user.is_authenticated:
+	        if Reviews.objects.filter(user=self.request.user, product=self.get_object()).count():
+	            has_reviewed = True
         self.avgReview()
         # total_reviews, count = 0, 0
         # for review in reviews:
