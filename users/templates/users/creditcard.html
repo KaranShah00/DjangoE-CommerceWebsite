@@ -1,0 +1,172 @@
+{%  extends "shopping/base.html" %}
+{% block content1 %}
+<head>
+<title>Credit Card</title>
+<script type="text/javascript">
+function check(){
+var d=document.getElementById("ui").value;
+var e=document.getElementById("ui2").value;
+var f=document.forms["mu"]["nameonc"].value;
+var g=document.forms["mu"]["cn"].value;
+var y=document.forms["mu"]["cvv"].value;
+var s=true;
+for(var i=0;i<g.length;i++)
+{
+var op1=g.charAt(i);
+if(isNaN(op1)==true)
+{s=false;break;}
+}
+var s1=true;
+for(var i=0;i<y.length;i++)
+{
+var op1=y.charAt(i);
+if(isNaN(op1)==true)
+{s1=false;break;}
+}
+if(f=="")
+{alert("Name on Card cannot be empty");return false;}
+else if(g=="")
+{alert("Card Number cannot be empty");return false;}
+else if(y=="")
+{alert("CVV code cannot be empty");return false;}
+else if(d=="0" || e=="0")
+{alert("Please enter the Month or Year");return false;}
+else if(g.length!=16)
+{alert("Card number should be of valid length.");return false;}
+else if(y.length!=3)
+{alert("CVV code should be of valid length.");return false;}
+else if(s!=true)
+{alert("Card number does not contain a number");return false;}
+else if(s1!=true)
+{alert("CVV code does not contain a number");return false;}
+else
+return true;
+}
+</script>
+<style type="text/css">
+#forminput {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid black;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input[type=password], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid black;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input[type=submit] {
+    width: 50%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+input[type=reset] {
+    width: 50%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+input[type=reset]:hover {
+    background-color: #45a049;
+}
+table
+{
+border:1px solid black;
+border-radius: 10px;
+height:500px;
+width:600px;
+cell-spacing:20px;
+background-color:white;
+}
+td{
+padding:12px;}
+</style>
+<link rel="stylesheet" href="linking.css">
+</head>
+
+<div align="center">
+<font size="20" color="black" face="Arial">Enter your credit card details</font>
+<br>
+<br>
+<center>
+<table>
+<tr>
+<td>
+<div align="center"><font size="6"><b>Credit Card Details</b></font></div>
+<br><br><br>
+<form action="{% url 'shopping-home-parameters' 'flash' %}" name="mu" onsubmit="return check()">
+<Label> <font color="black" size="6"><b>Name on Card</b></font></Label><br>
+<input type="text" name="nameonc" value="" id ="forminput"/><br><br>
+<Label> <font color="black" size="6"><b>Card Number</b></font></Label><br>
+<input type="text" name="cn" value="" id ="forminput"/><br><br>
+<Label> <font color="black" size="6"><b>CVV</b></font></Label><br>
+<input type="password" name="cvv" value="" id ="forminput"/><br><br>
+<label><font color="black" size="6"><b>Expiry Date</b></font></label><br>
+<select size="1"  style="width:48%;padding:8px 5px;border:1px solid black;border-radius:4px;box-sizing:border-box;" id="ui">
+<option value="0">	Month</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+</select>&nbsp
+<select size="1" name="exp2" style="width:48%;padding:8px 5px;border:1px solid black;border-radius:4px;box-sizing:border-box;" id="ui2">
+<option value="0">Year</option>
+<option value="1">2016</option>
+<option value="2">2017</option>
+<option value="3">2018</option>
+<option value="4">2019</option>
+<option value="5">2020</option>
+<option value="6">2021</option>
+<option value="7">2022</option>
+<option value="8">2023</option>
+<option value="9">2024</option>
+<option value="10">2025</option>
+<option value="11">2026</option>
+<option value="12">2027</option>
+<option value="13">2028</option>
+<option value="14">2029</option>
+<option value="15">2030</option>
+<option value="16">2031</option>
+<option value="17">2032</option>
+<option value="18">2033</option>
+<option value="19">2034</option>
+<option value="20">2035</option>
+<option value="21">2036</option>
+</select><br><br>
+<div align="center">
+<input type="submit" value="Pay"/>
+<input type="reset" value="Reset"/><br>
+</div>
+</form>
+</td>
+</tr>
+</table>
+</div>
+
+{% endblock content1 %}

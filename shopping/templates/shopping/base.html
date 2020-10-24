@@ -58,11 +58,12 @@
     				</div>
 	    			{% endfor %}
 	    		{% endif %}
-	      		{% block content %}{% endblock %}
+				{% block content %}{% endblock %}
 	    	</div>
 	    	{% block options %}
 	    	{% endblock %}
-  		</div>
+		  </div>
+		  {% block content1 %}{% endblock %}
 	</main>	
 	<footer class="page-footer text-center font-small mt-4 wow fadeIn" style="background: #222;">
     <hr class="my-4">

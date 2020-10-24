@@ -24,7 +24,7 @@
   </div>
 </div>
 		<a href = "{% url 'profile' %}"><div> Change Delivery Location?</div></a>
-		<a href = "{% url 'shopping-home-parameters' 'flash' %}"><button class="btn btn-success" style="float: right;"> Order Now</button></a>
+		<a href = "{% url 'payment-gateway' total %}"><button class="btn btn-success" style="float: right;"> Order Now</button></a>
 	{% else %}
 		<form method="POST">
 			{% csrf_token %}
