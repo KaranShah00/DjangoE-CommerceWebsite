@@ -3,12 +3,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.template import RequestContext
 from django.contrib import messages
 from django.contrib.auth.models import User
 from shopping.models import Product
 from .models import Cart, Order, OrderDetails
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, UserAddressForm
-
+from django.template import RequestContext
 def calcPrice(order, items):
 	total = 0
 	for item in items:
@@ -18,6 +19,19 @@ def calcPrice(order, items):
 	order.amount = total
 	order.save()
 
+
+@login_required
+def payment(request,tot):
+    return render(request, 'users/paymentgateway.html',{'total':tot})
+@login_required
+def credit_card(request):
+	return render(request, 'users/creditcard.html',{})
+@login_required
+def debit_card(request):
+	return render(request, 'users/debitcard.html',{})
+@login_required
+def cod(request):
+	return render(request,'users/cod.html',{})
 def placeOrder(request):
 	items = Cart.objects.filter(user=request.user)
 	order = Order.objects.create(customer=request.user)
@@ -131,4 +145,5 @@ def checkout(request):
 			return redirect('checkout')
 	else:
 		form = UserAddressForm(instance = request.user.profile)
+	ftotal=total
 	return render(request, 'users/checkout.html', {'items': items, 'total': total, 'form': form, 'is_empty': is_empty})

@@ -1,0 +1,66 @@
+{%  extends "shopping/base.html" %}
+{% block content1 %}
+<head>
+<title>Cash on Delivery</title>
+<script type="text/javascript">
+function check(){
+return true;
+}
+</script>
+<style type="text/css">
+
+input[type=submit] {
+    width: 50%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+table
+{
+border:1px solid black;
+border-radius: 10px;
+height:300px;
+width:800px;
+cell-spacing:20px;
+background-color:white;
+}
+td{
+padding:12px;}
+</style>
+<link rel="stylesheet" href="linking.css">
+</head>
+<body bgcolor="white">
+<div align="center">
+<font size="20" color="black" face="Arial">Cash on delivery</font></div>
+<br><br>
+<center>
+<table>
+<tr>
+<td>
+<div align="center"><font size="6"><b>Cash on Delivery Details</b></font></div>
+<br><br>
+<form action="{% url 'shopping-home-parameters' 'flash' %}"  name="mu" onsubmit="return check()" enctype="multipart/
+form-data">{% csrf_token %}
+<label><font color="black" size="6"><b>Our delivery man will collect cash when he comes at your house.</b></font></label><br><br>
+
+
+<div align="center">
+<input type="submit" value="Accept"/>
+
+</div>
+</form>
+</td>
+</tr>
+</table>
+</body>
+{% endblock content1 %}

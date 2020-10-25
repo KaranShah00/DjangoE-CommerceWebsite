@@ -1,0 +1,65 @@
+{%  extends "shopping/base.html" %}
+{% block content1 %}
+<head>
+<title>Payment Form</title>
+<style type="text/css">
+
+#b1 {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#b2{
+    width: 100%;
+    background-color: #5e03fc;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+</style>
+<link rel="stylesheet" href="linking.css">
+</head>
+<body bgcolor="white">
+<div align="center">
+<font size="20" color="black" face="Arial">Payment Gateway</font></div>
+<br>
+<br>
+
+<center>
+<table style="border:4px solid white;border-radius: 10px;height:500;width:600;cell-spacing:20px;background-color:white;">
+<tr>
+<td style="padding:8px;">
+<div align="center"><font size="6"><b>Your total is Rs. {{ total }}<br/> Choose your payment method:</b></font></div><br><br><br>
+
+
+<form action="#">
+    
+    
+       
+    
+        <a href ="{% url 'credit-card' %}"><input type="button" id="b1" name="ship" value="Credit Card"></a><!--<font size="5"><b>Credit card</b></font>--><br><br>
+        <a href ="{% url 'debit-card' %}"><input type="button" id="b2" name="ship" value="Debit Card" /></a><!--<font size="5"><b>Debit Card</b></font>--><br><br>
+        <!--<label><input type="button" id="b1" name="ship" value="Net Banking" />--><!--<font size="5"><b>Net Banking</b></font>--><!--</label><br><br>-->
+        <a href ="{% url 'cod' %}"><input type="button" id="b1" name="ship" value="Cash on Delivery" /></a><!--<font size="5"><b>Cash on delivery</b></font>--><br><br><br>
+   
+    
+   <!--<div align="center"> <input type="submit" value="Submit"><br>
+<input type="reset" value="Reset">
+    </div>-->
+    
+</form>
+</td>
+</tr>
+</table>
+</center>
+</body>
+{% endblock content1 %}

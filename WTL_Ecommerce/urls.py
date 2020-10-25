@@ -17,7 +17,7 @@ urlpatterns = [
     path('cart/<str:par1>/<str:par2>/', user_views.updateCart, name = 'cart'),
     path('mycart/', user_views.viewCart, name = 'mycart'),
     path('checkout/', user_views.checkout, name = 'checkout'),
-    path('orders/', user_views.viewOrder.as_view(), name='orders'),
+    path('orders/', user_views.viewOrder.as_view(), name='orders')
 ]
 
 if(settings.DEBUG):
